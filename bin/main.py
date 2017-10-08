@@ -12,4 +12,7 @@ def get_2017_data(fp_pattern=FILES_FP_PATTERN):
             data.extend(json.load(f))
     return data
 
+def get_average(prop, ndays):
+    return sum(x[prop] for x in data[-ndays:]) / ndays
+
 data = get_2017_data()
