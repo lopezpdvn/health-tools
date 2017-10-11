@@ -1,7 +1,11 @@
 from glob import iglob
+from datetime import datetime
 import json
 
+from timeman import DEFAULT_DATETIME_FMT
+
 FILES_FP_PATTERN = 'data/2017/*json'
+DATETIME_KEY = 'datetime'
 
 data = []
 
@@ -10,6 +14,9 @@ def get_2017_data(fp_pattern=FILES_FP_PATTERN):
     for month in sorted(iglob('data/2017/*json')):
         with open(month) as f:
             data.extend(json.load(f))
+    for x in data:
+        x[DATETIME_KEY] = datetime.strptime(x[DATETIME_KEY],
+                DEFAULT_DATETIME_FMT)
     return data
 
 def get_average(prop, ndays):
