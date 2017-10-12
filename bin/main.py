@@ -11,7 +11,7 @@ data = []
 
 def get_2017_data(fp_pattern=FILES_FP_PATTERN):
     data = []
-    for month in sorted(iglob('data/2017/*json')):
+    for month in sorted(iglob(fp_pattern)):
         with open(month) as f:
             data.extend(json.load(f))
     for x in data:
