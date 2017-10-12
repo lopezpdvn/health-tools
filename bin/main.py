@@ -1,5 +1,5 @@
 from glob import iglob
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 
 from timeman import DEFAULT_DATETIME_FMT
@@ -19,7 +19,10 @@ def get_2017_data(fp_pattern=FILES_FP_PATTERN):
                 DEFAULT_DATETIME_FMT)
     return data
 
-def get_average(prop, ndays):
-    return sum(x[prop] for x in data[-ndays:]) / ndays
+def get_average_from_now(prop, ndays):
+    start = datetime.today() - timedelta(days=ndays)
+    range_samples = list(x[prop] for x in data if x[DATETIME_KEY] >= start)
+    nrange_samples = len(range_samples)
+    return (sum(range_samples) / nrange_samples, nrange_samples)
 
 data = get_2017_data()
