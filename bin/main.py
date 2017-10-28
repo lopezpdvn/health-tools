@@ -19,15 +19,17 @@ def get_2017_data(fp_pattern=FILES_FP_PATTERN):
                 DEFAULT_DATETIME_FMT)
     return data
 
-def get_average_from_now(prop, ndays):
+def get_average_from_now(prop_retriever, ndays):
     start = datetime.today() - timedelta(days=ndays)
-    range_samples = list(x[prop] for x in data if x[DATETIME_KEY] >= start)
+    range_samples = list(
+            prop_retriever(x) for x in data if x[DATETIME_KEY] >= start)
     nrange_samples = len(range_samples)
     return (sum(range_samples) / nrange_samples, nrange_samples)
 
 def get_average_from_then(prop, start):
     start = datetime.strptime(start, DEFAULT_DATETIME_FMT)
-    range_samples = list(x[prop] for x in data if x[DATETIME_KEY] >= start)
+    range_samples = list(
+            prop_retriever(x) for x in data if x[DATETIME_KEY] >= start)
     nrange_samples = len(range_samples)
     return (sum(range_samples) / nrange_samples, nrange_samples)
 
