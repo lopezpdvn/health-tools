@@ -1,2 +1,5 @@
 help:
-	@echo yeah
+	@echo validate
+
+validate:
+	@bin/validate
