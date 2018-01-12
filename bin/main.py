@@ -4,16 +4,19 @@ import json
 
 from timeman import DEFAULT_DATETIME_FMT
 
-FILES_FP_PATTERN = 'data/2017/*json'
+FILES_FP_PATTERN = ('data/2017/*json', 'data/2018/*json')
 DATETIME_KEY = 'datetime'
 
 data = []
 
-def get_2017_data(fp_pattern=FILES_FP_PATTERN):
+def get_data(fp_pattern=FILES_FP_PATTERN):
     data = []
-    for month in sorted(iglob(fp_pattern)):
-        with open(month) as f:
-            data.extend(json.load(f))
+
+    for ifp_pattern in fp_pattern:
+        for month in sorted(iglob(ifp_pattern)):
+            with open(month) as f:
+                data.extend(json.load(f))
+
     for x in data:
         x[DATETIME_KEY] = datetime.strptime(x[DATETIME_KEY],
                 DEFAULT_DATETIME_FMT)
@@ -33,4 +36,4 @@ def get_average_from_then(prop_retriever, start):
     nrange_samples = len(range_samples)
     return (sum(range_samples) / nrange_samples, nrange_samples)
 
-data = get_2017_data()
+data = get_data()
