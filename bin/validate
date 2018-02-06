@@ -4,7 +4,7 @@
 '''validate
 '''
 
-from main import get_2017_data
-data = get_2017_data()
+from main import get_data
+data = get_data()
 
 # vim: ft=python
