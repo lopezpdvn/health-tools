@@ -5,18 +5,17 @@ import json
 
 from timeman import DEFAULT_DATETIME_FMT
 
-FILES_FP_PATTERN = ('data/2017/*json', 'data/2018/*json')
+FILES_FP_PATTERN = 'data/**/*json'
 DATETIME_KEY = 'datetime'
 
 data = []
 
-def get_data(fp_pattern=FILES_FP_PATTERN):
+def get_data(fp_pattern=FILES_FP_PATTERN, recursive=True):
     data = []
 
-    for ifp_pattern in fp_pattern:
-        for month in sorted(iglob(ifp_pattern)):
-            with open(month) as f:
-                data.extend(json.load(f))
+    for month in sorted(iglob(fp_pattern, recursive=recursive)):
+        with open(month) as f:
+            data.extend(json.load(f))
 
     for x in data:
         x[DATETIME_KEY] = datetime.strptime(x[DATETIME_KEY],
