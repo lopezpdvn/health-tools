@@ -2,6 +2,7 @@ from glob import iglob
 from datetime import datetime, timedelta
 from pprint import pprint
 import json
+import sys
 
 from timeman import DEFAULT_DATETIME_FMT
 
@@ -15,7 +16,11 @@ def get_data(fp_pattern=FILES_FP_PATTERN, recursive=True):
 
     for month in sorted(iglob(fp_pattern, recursive=recursive)):
         with open(month) as f:
-            data.extend(json.load(f))
+            try:
+                data.extend(json.load(f))
+            except json.decoder.JSONDecodeError:
+                print(month, file=sys.stderr)
+                raise
 
     for x in data:
         x[DATETIME_KEY] = datetime.strptime(x[DATETIME_KEY],
