@@ -47,6 +47,8 @@ def get_recent_averages(prop_retriever, sample_range):
         for i in sample_range)
 
 def main_rpt(prop_retriever, sample_range):
-    pprint(get_recent_averages(prop_retriever, sample_range))
+    pprint(tuple(
+        (day, avg_weight) for day, avg_weight in
+        get_recent_averages(prop_retriever, sample_range)))
 
 data = get_data()
