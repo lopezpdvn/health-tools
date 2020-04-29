@@ -51,4 +51,11 @@ def main_rpt(prop_retriever, sample_range):
         (day, '{:.2f}'.format(avg_weight)) for day, avg_weight in
         get_recent_averages(prop_retriever, sample_range)))
 
+def sleep_rpt(take_k=10):
+    x = [{'total_sleep': e['total_sleep'],
+         'efficiency': e['total_sleep'] / e['time_in_bed'],
+         'datetime': str(e['datetime'])}
+            for e in data[-take_k:]]
+    pprint(x)
+
 data = get_data()
